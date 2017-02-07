@@ -35,7 +35,50 @@ build:
     #- $SHIPPABLE_BUILD_DIR/shippable.yml
 integrations:    
   notifications:
-    - integrationName: et
+    - integrationName: ship-slack 
+      type: slack
+      recipients:
+        #- "#sreya"
+        - "#random" 
+        - "#public-chnl" 
+      #on_start: always
+      on_success: always
+      on_failure: always
+      on_pull_request: always 
+      
+      
+    - integrationName: email         
+      type: email        
+      recipients: 
+          #- sreya
+        - shiptest.rc.ow@gmail.com
+        - shiptest.rc.me@gmail.com
+      on_start: always
+      on_success: always 
+      on_failure: always 
+       
+     
+    - integrationName: irc    
+      type: irc
+      recipients:
+        - "chat.freenode.net#test-irc"
+        - "chat.freenode.net#test1-irc"
+      on_start: always
+      on_success: always      
+      on_failure: always   
+    
+    - integrationName: ship-hipchat
+      type: hipchat
+      recipients:
+       # - '#n1'
+        - '#shiptestpvt'
+     # - '#Pillar%20of%20Autumn'
+        - '@shiphitchcock1'
+      on_start: always
+      on_success: always   
+      on_failure: always
+     
+    - integrationName: et  
       type: webhook
       payload:
         - title=Failure - $REPO_FULL_NAME - $BUILD_NUMBER
@@ -43,4 +86,12 @@ integrations:
       on_start: always
       on_success: always
       on_failure: always   
+        
+    - integrationName: project-trigger #samplNod project in shiptest-rc-ow will trigger
+      type: webhook
+      payload:
+        - BUILD_NUM=$SHIPPABLE_JOB_NUMBER 
+      on_start: always
+      on_success: always
+      on_failure: always
  
