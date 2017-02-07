@@ -58,7 +58,7 @@ integrations:
     
 
      
-    - integrationName: generic-webhook  
+    - integrationName: et  
       type: webhook
       payload:
         - title=Failure - $REPO_FULL_NAME - $BUILD_NUMBER
