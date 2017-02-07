@@ -3,25 +3,39 @@ language: java
 jdk:
   - openjdk6
   #- openjdk7
-  #- oraclejdk7     
+  - oraclejdk7     
   #- oraclejdk8
 env:
-  #- APP_NAME=qhodeheroku2
+  - APP_NAME=qhodeheroku2
   #- test1=genexec1
-
+matrix:
+  include:
+    - jdk: oraclejdk8
+      env:
+        - test2=genexec2
+    - jdk: openjdk7
+      env: ship@=test
+  exclude:
+    - jdk: oraclejdk7
+      env:
+        - APP_NAME=qhodeheroku2  
+      #  - test1=genexec1
+  allow_failures:
+    - jdk: openjdk7
 build:
   #advancedReporting: true
   ci:
     # Create folders for test and code coverage
     - mkdir -p shippable/codecoverage
-    #- mvn install
+    - mvn install
     - cp -r target shippable/codecoverage
+    - docker ps
     
-  #cache: true
-  #cache_dir_list: 
-    #- $SHIPPABLE_BUILD_DIR/shippable.yml
+  cache: true
+ # cache_dir_list: 
+ #   - $SHIPPABLE_BUILD_DIR/shippable.yml
 integrations:    
-  notifications:
+  notifications:   
     - integrationName: email         
       type: email        
       recipients: 
@@ -41,12 +55,16 @@ integrations:
       on_start: always
       on_success: always      
       on_failure: always   
+    
+
      
-    - integrationName: et  
+    - integrationName: generic-webhook  
       type: webhook
       payload:
         - title=Failure - $REPO_FULL_NAME - $BUILD_NUMBER
         - body=Shippable Run $BUILD_NUMBER ($BUILD_URL) failed for $COMPARE_URL 
+      on_start: always
       on_success: always
       on_failure: always   
- 
+        
+
