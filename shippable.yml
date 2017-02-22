@@ -27,8 +27,8 @@ build:
   ci:
     # Create folders for test and code coverage
     - mkdir -p shippable/codecoverage
-    - mvn install
-    - cp -r target shippable/codecoverage
+    #- mvn install
+    #- cp -r target shippable/codecoverage
     - docker ps
     
   #cache: true
@@ -47,21 +47,5 @@ integrations:
       on_failure: always 
        
      
-    - integrationName: irc    
-      type: irc
-      recipients:
-        - "chat.freenode.net#test-irc"
-        - "chat.freenode.net#test1-irc"
-      on_start: always
-      on_success: always      
-      on_failure: always   
-    
-
-     
-    - integrationName: et  
-      type: webhook 
-      on_start: always
-      on_success: always
-      on_failure: always   
         
 
